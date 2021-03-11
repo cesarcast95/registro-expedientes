@@ -1,0 +1,30 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Actualizar Expediente{% endblock %}
+{% block content %}
+<main role="main">
+  <div class="container">
+    <div class="row mt-3 mb-5">
+      <div class="col-md-9 mx-auto">
+        <div>
+        <!--Esto se hace para decirle al usuario que ha editado bien la pagina
+        utilizando el oj enviado en el request.GET -->
+        {% if 'ok' in request.GET %}
+        <p style="color:green;">
+          Expediente editada correctamente
+          <a href="{% url 'registry:registro' expediente.id expediente.descripcion|slugify %}">Clic para ver el resultado</a>.
+        </p>
+        
+        {% endif %}
+            <form action="" method="post">{% csrf_token %}
+              {{ form.as_p }}
+              <div class="text-center">
+                <input type="submit" class="btn btn-primary btn-block" value="Actualizar Expediente" />
+              </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

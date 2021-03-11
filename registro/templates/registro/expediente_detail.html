@@ -1,0 +1,71 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}{{page.title}}{% endblock %}
+{% block content %}
+<!--Con esta linea, incluimos el archivo pages_menu.html
+para hacer uso de su codigo y poder crear un submenu -->
+<main role="main">
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-md-9 mx-auto">
+          {% if expediente.estado and not expediente.flag %}
+            <div class="card text-center">
+              <div class="card-header bg-success text-white">
+                {{expediente.codigo}}
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">{{expediente.tipo}}</h5>
+                <p class="card-text">{{expediente.descripcion|safe}}</p>
+                {% if request.user.is_staff %}
+                <p><a href="{% url 'registry:update' expediente.id %}">Editar</a></p>
+                {% endif %}
+              </div>
+            </div>
+        {% endif %}
+        {% if expediente.estado and expediente.flag %}
+        <div class="card text-center">
+            <div class="card-header bg-danger text-white">
+              {{expediente.codigo}}
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">{{expediente.tipo}}</h5>
+              <p class="card-text">{{expediente.descripcion|safe}}</p>
+              {% if request.user.is_staff %}
+              <p><a href="{% url 'registry:update' expediente.id %}">Editar</a></p>
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+          {% if not expediente.estado and expediente.flag %}
+          <div class="card text-center">
+              <div class="card-header bg-warning text-white">
+                {{expediente.codigo}}
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">{{expediente.tipo}}</h5>
+                <p class="card-text">{{expediente.descripcion|safe}}</p>
+                {% if request.user.is_staff %}
+                <p><a href="{% url 'registry:update' expediente.id %}">Editar</a></p>
+                {% endif %}
+              </div>
+            </div>
+            {% endif %}
+            {% if not expediente.estado and not expediente.flag %}
+            <div class="card text-center">
+                <div class="card-header bg-secondary text-white">
+                  {{expediente.codigo}}
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">{{expediente.tipo}}</h5>
+                  <p class="card-text">{{expediente.descripcion|safe}}</p>
+                  {% if request.user.is_staff %}
+                  <p><a href="{% url 'registry:update' expediente.id %}">Editar</a></p>
+                  {% endif %}
+                </div>
+              </div>
+              {% endif %}
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
